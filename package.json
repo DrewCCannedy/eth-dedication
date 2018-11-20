@@ -1,0 +1,11 @@
+{
+  "name": "dedication",
+  "version": "1.0.0",
+  "description": "Eth/React App for making a dedication to a person",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Drew Cannedy",
+  "license": "ISC"
+}
