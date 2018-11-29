@@ -30,7 +30,7 @@ beforeEach(async () => {
   );
 });
 
-describe('Dedications', () => {
+describe('Dedications on ganache', () => {
   it('deploys a factory and a dedication', () => {
     assert.ok(factory.options.address);
     assert.ok(dedication.options.address);
