@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//custome components
+//custom components
 import Layout from '../components/Layout';
 import DedicationList from '../components/DedicationList';
 //ethereum
@@ -10,32 +10,25 @@ class DedicationIndex extends Component {
   static async getInitialProps() {
     // a list of deployed dedication addresses
     const dedications = await factory.methods.getDeployedDedications().call();
-    if (dedications === undefined) throw TypeError;
-    // gets the dedicatedTo and content attributes of the dedication
-    const test = Dedication(dedications[0]).methods.content().call();
-    const dedicationDetails = dedications.map(async (address) => {
-      const instance = await Dedication(address);
-      //get the content and dedicated to properties together
-      // const [ dedicatedTo, content ] = await instance.methods.getDedication().call();
-      const dedicatedTo = await instance.methods.dedicatedTo().call();
-      const content = await instance.methods.content().call();
-      if (dedicatedTo === undefined || content === undefined) throw TypeError;
-      return {
-        dedicatedTo,
-        content
-      };
-    });
 
-    return { dedicationDetails,test };
+    // gets the dedicatedTo and content attributes of the dedication
+    let dedicationDetails = [];
+    for (let i = 0; i < dedications.length; i++) {
+      const address = dedications[i];
+      const instance = Dedication(address);
+      const dedication = await instance.methods.getDedication().call();
+      const dedicatedTo = dedication[0];
+      const content = dedication[1];
+      dedicationDetails.push({ address, dedicatedTo, content });
+    }
+    return { dedicationDetails, address: dedications.length };
   }
 
   render() {
     return (
       <Layout>
-        <h1>Dedication</h1>
+        <h1>Ethereum-Dedications</h1>
         <DedicationList dedicationDetails={this.props.dedicationDetails} />
-        {this.props.test[0]};
-        {this.props.dedicationDetails[0].content}
       </Layout>
     );
   }

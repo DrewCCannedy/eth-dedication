@@ -1,6 +1,6 @@
 const HDWalletProvider = require('truffle-hdwallet-provider');
 const Web3 = require('web3');
-const compiledDedication = require('../ethereum/build/Dedication.json');
+const compiledDedication = require('../ethereum/build/Dedication');
 
 const assert = require('assert');
 

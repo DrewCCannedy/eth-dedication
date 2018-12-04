@@ -7,11 +7,13 @@ class DedicationList extends Component {
     const items = this.props.dedicationDetails.map(instance => {
       return {
         header: instance.dedicatedTo,
+        meta: instance.address,
         description: instance.content,
-        fluid: true
+        color: "blue",
+        style: { overflowWrap: 'break-word' }
       };
     });
-    return <Card.Group items={items} />;
+    return <Card.Group items={items} centered itemsPerRow={4} />;
   }
 
   render() {
