@@ -1,6 +1,7 @@
 const HDWalletProvider = require('truffle-hdwallet-provider');
 const Web3 = require('web3');
 const compiledDedication = require('../ethereum/build/Dedication');
+const compiledDedicationFactory = require('../ethereum/build/DedicationFactory');
 
 const assert = require('assert');
 
@@ -17,6 +18,10 @@ beforeEach(async () => {
   instance = new web3.eth.Contract(
     JSON.parse(compiledDedication.interface),
     "0xFd6E53E116Db779986855E6EF33699a65C55b6AC");
+
+  factory = new web3.eth.Contract(
+    JSON.parse(compiledDedicationFactory.interface),
+    "0x9061B9086AE18C653882C88f3183a5A28691D3C7");
 });
 
 describe('Dedications on rinkeby', () => {
@@ -31,6 +36,18 @@ describe('Dedications on rinkeby', () => {
     const dedication = await instance.methods.getDedication().call();
     const dedicatedTo = dedication[0];
     const content = dedication[1];
+    assert.equal(dedicatedTo, "mother");
+    assert.equal(content, "you rock my socks off");
+  }).timeout(15000);
+
+  it('returns dedications based on an address', async () => {
+    const owner = await web3.eth.getAccounts();
+    const dedications = await factory.methods.getDedicationsByAddress(owner[0]).call();
+    const address = dedications[0];
+    const dedication0 = new web3.eth.Contract(JSON.parse(compiledDedication.interface), address);
+    const dedicationContent = await dedication0.methods.getDedication().call();
+    const dedicatedTo = dedicationContent[0];
+    const content = dedicationContent[1];
     assert.equal(dedicatedTo, "mother");
     assert.equal(content, "you rock my socks off");
   }).timeout(15000);

@@ -7,11 +7,13 @@ import DedicationList from '../components/DedicationList';
 //ethereum
 import factory from '../ethereum/factory';
 import Dedication from '../ethereum/dedication';
+import web3 from '../ethereum/web3';
 
 class DedicationIndex extends Component {
   static async getInitialProps() {
-    // a list of deployed dedication addresses
-    const dedications = await factory.methods.getDeployedDedications().call();
+    // a list of deployed dedication addresses based on a lookup address
+    const accounts = await web3.eth.getAccounts();
+    const dedications = await factory.methods.getDedicationsByAddress(accounts[0]).call();
 
     // gets the dedicatedTo, address, and content attributes of each dedication
     let dedicationDetails = [];
