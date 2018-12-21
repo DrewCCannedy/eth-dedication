@@ -13,8 +13,12 @@ class DedicationIndex extends Component {
   static async getInitialProps() {
     // a list of deployed dedication addresses based on a lookup address
     const accounts = await web3.eth.getAccounts();
-    const dedications = await factory.methods.getDedicationsByAddress(accounts[0]).call();
-
+    let dedications;
+    try {
+      dedications = await factory.methods.getDedicationsByAddress(accounts[0]).call();
+    } catch (err) {
+      dedications = [];
+    }
     // gets the dedicatedTo, address, and content attributes of each dedication
     let dedicationDetails = [];
     for (let i = 0; i < dedications.length; i++) {
@@ -34,7 +38,7 @@ class DedicationIndex extends Component {
         <Grid columns={1}>
           <Grid.Row>
             <Grid.Column>
-              <Button content='new dedication' floated="right" primary link onClick={() => Router.push('/new')} />
+              <Button content='new dedication' floated="right" primary onClick={() => Router.push('/new')} />
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>

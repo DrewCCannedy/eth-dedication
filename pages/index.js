@@ -32,7 +32,7 @@ class DedicationIndex extends Component {
         <Grid columns={1}>
           <Grid.Row>
             <Grid.Column>
-              <Button content='new dedication' floated="right" primary link onClick={() => Router.push('/new')} />
+              <Button content='new dedication' floated="right" primary onClick={() => Router.push('/new')} />
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>

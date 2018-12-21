@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card } from 'semantic-ui-react';
+import { Card, Message } from 'semantic-ui-react';
 
 class DedicationList extends Component {
   renderDedications() {
@@ -17,11 +17,26 @@ class DedicationList extends Component {
   }
 
   render() {
-    return (
-      <div>
-        {this.renderDedications()}
-      </div>
-    );
+    if (this.props.dedicationDetails.length > 0) {
+      return (
+        <div>
+          {this.renderDedications()}
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <Message
+            error
+            header='Cannot find owned dedications'
+            list={[
+              'Make sure you have created a dedication and are signed into MetaMask',
+              'Need help? Check out the ABOUT page!',
+            ]}
+          />
+        </div>
+      )
+    }
   }
 }
 
