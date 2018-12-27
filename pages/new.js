@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, Button, Input, Message } from 'semantic-ui-react';
 //custom components
 import Layout from '../components/Layout';
+import DedicationList from '../components/DedicationList'
 //ethereum 
 import web3 from '../ethereum/web3';
 import factory from '../ethereum/factory';
@@ -28,17 +29,17 @@ class NewDedication extends Component {
         .send({
           from: accounts[0]
         });
+      this.setState({ success: true });
     } catch (err) {
-      this.setState({ error: true });
+      this.setState({ error: true, success: false });
     }
     this.setState({ loading: false });
-    this.setState({ success: true });
   };
 
   render() {
     return (
       <Layout>
-        <Form error={this.state.error} success={this.state.success} onSubmit={this.onSubmit}>
+        <Form error={this.state.error} loading={this.state.loading} success={this.state.success} onSubmit={this.onSubmit}>
           <Form.Group widths='equal'>
             <Form.Field>
               <label>Dedicated to</label>
@@ -69,7 +70,28 @@ class NewDedication extends Component {
             content='Check it out on the HOME or OWNED pages!'
           />
           <Button floated='right' loading={this.state.loading} primary>Create!</Button>
-        </Form>
+        </Form><br/>
+        <h2>Example</h2>
+        <DedicationList dedicationDetails={[{
+          dedicatedTo: "person to dedicate to",
+          address: 'address on the blockchain',
+          content: 'why you are dedicating to them',
+        },
+        {
+          dedicatedTo: "person to dedicate to",
+          address: 'address on the blockchain',
+          content: 'why you are dedicating to them',
+        },
+        {
+          dedicatedTo: "person to dedicate to",
+          address: 'address on the blockchain',
+          content: 'why you are dedicating to them',
+        },
+        {
+          dedicatedTo: "person to dedicate to",
+          address: 'address on the blockchain',
+          content: 'why you are dedicating to them',
+        }]} />
       </Layout>
     );
   }

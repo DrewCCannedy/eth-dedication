@@ -8,7 +8,7 @@ import DedicationList from '../components/DedicationList';
 import factory from '../ethereum/factory';
 import Dedication from '../ethereum/dedication';
 
-class DedicationIndex extends Component {
+class DedicationSearch extends Component {
   static async getInitialProps() {
     // a list of deployed dedication addresses
     const dedications = await factory.methods.getDeployedDedications().call();
@@ -46,4 +46,4 @@ class DedicationIndex extends Component {
   }
 };
 
-export default DedicationIndex;
+export default DedicationSearch;
